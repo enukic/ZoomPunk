@@ -1,0 +1,6 @@
+[default]
+chip = "STM32F746NGH6"
+
+[probe]
+protocol = "Swd"
+speed = 1800
