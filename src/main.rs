@@ -1,11 +1,26 @@
 #![no_std]
 #![no_main]
 
+use cortex_m::delay::Delay;
 use cortex_m_rt::entry;
 use panic_halt as _;
-use stm32f7xx_hal::pac;
+use stm32f7xx_hal:: {
+    pac,
+    prelude::*,
+};
 
 #[entry]
 fn main() -> ! {
-    loop {}
+    let device_peripherals = pac::Peripherals::take().unwrap();
+    let core_peripherals = cortex_m::Peripherals::take().unwrap();
+    let rcc = device_peripherals.RCC.constrain();
+    let clocks = rcc.cfgr.sysclk(216.MHz()).freeze();
+    let gpioi = device_peripherals.GPIOI.split();
+
+    let mut led = gpioi.pi1.into_push_pull_output();
+    let mut delay = Delay::new(core_peripherals.SYST, clocks.sysclk().to_Hz());
+    loop {
+        led.toggle();
+        delay.delay_ms(1000_u32);
+    }
 }
