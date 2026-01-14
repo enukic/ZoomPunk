@@ -7,7 +7,10 @@ edition = "2024"
 cortex-m = {version = "0.7.7", features = ["critical-section-single-core"]}
 cortex-m-rt = "0.7"
 embedded-hal = "1.0"
-stm32f7xx-hal = { version = "0.8.0", features = ["stm32f746", "rt"] }
+stm32f7xx-hal = { version = "0.8.0", features = ["stm32f746", "rt", "fmc", "ltdc"] }
+
+# Graphics Library
+embedded-graphics = "0.8.1"
 
 # Logs
 defmt = "1.0.1"
