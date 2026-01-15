@@ -94,20 +94,20 @@ fn main() -> ! {
     let mut backlight = gpiok.pk3.into_push_pull_output();
     backlight.set_high();
 
-    let mut display = display::Stm32F7DiscoDisplay::new(device_peripherals.LTDC, device_peripherals.DMA2D);
-    display
+    let mut disp = display::Stm32F7DiscoDisplay::new(device_peripherals.LTDC, device_peripherals.DMA2D);
+    disp
         .controller
         .config_layer(Layer::L1, unsafe {&mut *core::ptr::addr_of_mut!(FB_LAYER1)}, PixelFormat::RGB565);
 
-    display.controller.enable_layer(Layer::L1);
-    display.controller.reload();
+    disp.controller.enable_layer(Layer::L1);
+    disp.controller.reload();
 
-    let display = &mut display;
+    let disp = &mut disp;
 
     disp_on.set_high();
 
     let style = MonoTextStyle::new(&FONT_10X20, Rgb565::WHITE);
-    Text::new("ZoomPunk is coming...", Point::new(20, 30), style).draw(display).unwrap();
+    Text::new("ZoomPunk is coming...", Point::new(20, 30), style).draw(disp).unwrap();
 
     let mut led = gpioi.pi1.into_push_pull_output();
     let mut delay = Delay::new(core_peripherals.SYST, clocks.sysclk().to_Hz());
