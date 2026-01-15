@@ -2,7 +2,7 @@
 #![no_main]
 
 mod hooks;
-mod screen;
+mod display;
 
 use cortex_m::delay::Delay;
 use cortex_m_rt::entry;
@@ -94,7 +94,7 @@ fn main() -> ! {
     let mut backlight = gpiok.pk3.into_push_pull_output();
     backlight.set_high();
 
-    let mut display = screen::Stm32F7DiscoDisplay::new(device_peripherals.LTDC, device_peripherals.DMA2D);
+    let mut display = display::Stm32F7DiscoDisplay::new(device_peripherals.LTDC, device_peripherals.DMA2D);
     display
         .controller
         .config_layer(Layer::L1, unsafe {&mut *core::ptr::addr_of_mut!(FB_LAYER1)}, PixelFormat::RGB565);
