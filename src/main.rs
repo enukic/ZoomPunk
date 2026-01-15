@@ -109,10 +109,8 @@ fn main() -> ! {
     let style = MonoTextStyle::new(&FONT_10X20, Rgb565::WHITE);
     Text::new("ZoomPunk is coming...", Point::new(20, 30), style).draw(disp).unwrap();
 
-    let mut led = gpioi.pi1.into_push_pull_output();
     let mut delay = Delay::new(core_peripherals.SYST, clocks.sysclk().to_Hz());
     loop {
-        led.toggle();
         delay.delay_ms(1000_u32);
     }
 }
